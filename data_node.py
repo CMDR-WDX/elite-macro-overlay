@@ -2,6 +2,7 @@ from typing import Optional
 from ui import UIOverlay
 from typing import Callable
 
+
 class DataNode:
     def __init__(self, parent: Optional, message: Optional[str], opt_message_short: Optional[str]):
         self.message = message
@@ -72,7 +73,13 @@ class DataNodeState:
     def __init__(self, root: DataNode, ui: UIOverlay):
         self.current = root
         self.ui = ui
+        self.ui.reset_tree_callback.append(self._set_root_without_emit)
         self.new_message_listeners: list[Callable[[str], None]] = []
+
+    def _set_root_without_emit(self):
+        while self.current.parent is not None:
+            self.current = self.current.parent
+        self.ui.notify_about_current_state_change(self.current, False)
 
     def notify_about_keypress(self, numpad_number: int):
         index = numpad_number - 1
@@ -80,6 +87,7 @@ class DataNodeState:
             #  Try to go up
             if self.current.parent is None:
                 print("Got command to go up, but is at root. ignoring")
+                self.ui.notify_about_visibility_switch()
             else:
                 self.current = self.current.parent
                 self.ui.notify_about_current_state_change(self.current)
