@@ -1,0 +1,39 @@
+{
+  "__comment": "Write your messages here. Each node can either be a Folder or an Entry",
+  "node": [
+    {
+      "label": "Supercruise",
+      "node": [
+        {
+          "label": "PrepDictFormal",
+          "message": "Commencing Interdiction. Slow down and submit."
+        },
+        {
+          "label": "PrepDict",
+          "message": "Make this easy on yourself and submit."
+        }
+      ]
+    },
+    {
+      "label": "Demands",
+      "node": [
+        {
+          "label": "stop1",
+          "message": "Come to a halt."
+        },
+        {
+          "label": "stop2",
+          "message": "Cease your locomotion at once!"
+        },
+        {
+          "label": "OpinionPnPz",
+          "message": "What is your opinion on Pineapple on Pizza?"
+        }
+      ]
+    },
+    {
+      "label": "flysafe",
+      "message": "Fly Safe! Z0"
+    }
+  ]
+}
