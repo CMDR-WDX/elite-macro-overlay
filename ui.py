@@ -38,7 +38,6 @@ class UiHider:
         print("Killing UI Loop "+str(id))
 
 
-
 def _make_overlay(frame: tk.Tk):
     """
     Creates an overlay frame. This code has been taken from
@@ -46,6 +45,8 @@ def _make_overlay(frame: tk.Tk):
     :param frame: The Frame to create an Overlay from
     """
     frame.overrideredirect(True)
+    frame.title("Elite Macro Overlay")
+
     frame.config(background="white")
     frame.geometry("+20+20")
     frame.wm_attributes("-topmost", True)
@@ -55,11 +56,14 @@ def _make_overlay(frame: tk.Tk):
 class UIOverlay:
     def __init__(self):
         self.root = tk.Tk()
+        self.root.title("Elite Macro Overlay")
+        self.root.attributes("-alpha", 0.0)
+        self.subroot = tk.Toplevel(self.root)
         self.current_node = None
-        _make_overlay(self.root)
+        _make_overlay(self.subroot)
         self.visible = True
         self.ui_hider = UiHider(5, self._hide_ui_callback)
-        self.root.bind("<<RefreshVisibility>>", lambda _: self.notify_about_visibility_switch())
+        self.subroot.bind("<<RefreshVisibility>>", lambda _: self.notify_about_visibility_switch())
         self.reset_tree_callback = []
 
     def _hide_ui_callback(self):
@@ -67,7 +71,7 @@ class UIOverlay:
         Called from Thread
         """
         self.visible = True
-        self.root.event_generate("<<RefreshVisibility>>")
+        self.subroot.event_generate("<<RefreshVisibility>>")
         for listener in self.reset_tree_callback:
             listener()
 
@@ -89,14 +93,14 @@ class UIOverlay:
             self.__build_ui()
 
     def __hide_ui(self):
-        for child in self.root.winfo_children():
+        for child in self.subroot.winfo_children():
             child.destroy()
 
     def __build_ui(self):
-        for child in self.root.winfo_children():
+        for child in self.subroot.winfo_children():
             child.destroy()
 
-        frame = tk.Frame(self.root, background="white")
+        frame = tk.Frame(self.subroot, background="white")
         frame.grid(sticky=tk.W)
         if self.current_node is None:
             return

@@ -32,8 +32,17 @@
       ]
     },
     {
-      "label": "flysafe",
-      "message": "Fly Safe! Z0"
+      "label": "Gank",
+      "node": [
+        {
+          "label": "gonk'n'go",
+          "message": "Thanks for using Gonk' n Go fast-dock services. If you enjoyed our help please do rate us with 5 stars on GalNet! "
+        },
+        {
+          "label": "test",
+          "message": "1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 "
+        }
+      ]
     }
   ]
 }
